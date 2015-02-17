@@ -8,7 +8,9 @@ import (
 func init() {
     router := mux.NewRouter()
     router.HandleFunc("/", IndexHandler)
-    router.HandleFunc("/login", LoginHandler).Methods("GET", "POST")
+    router.HandleFunc("/login", LoginHandler).Methods("GET")
+
+    router.HandleFunc("/staff/dashboard", StaffDashboardHandler).Methods("GET", "POST")
 
     http.Handle("/", router)
 }

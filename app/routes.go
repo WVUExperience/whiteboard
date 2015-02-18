@@ -4,6 +4,7 @@ import (
     "appengine"
     "appengine/user"
     "fmt"
+    "github.com/hoisie/mustache"
     "net/http"
 )
 
@@ -37,7 +38,14 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
         http.Redirect(w, r, url, 301)
         return
     } else if IsWVUStudent(currentUser.String()) && IsCampaignStaff(currentUser.String()) {
-        fmt.Fprintf(w, "%#v", currentUser)
+        logoutURL, _ := user.LogoutURL(c, "/")
+        data := map[string]interface{}{
+            "email": currentUser.String(),
+            "id": currentUser.ID,
+            "logout": logoutURL,
+        }
+        page := mustache.RenderFile(GetPath("dash.html"), data)
+        fmt.Fprint(w, page)
     } else {
         fmt.Fprint(w, "This page is restricted to campaign staff only.")
     }

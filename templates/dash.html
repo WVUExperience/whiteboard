@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <title>Vote - Scott Braxton 2015</title>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Vote - Scott Braxton 2015</h1>
+                <h3>A WVU Experience, tailored to <i>you</i>.</h3>
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <h2>Welcome, {{email}}.</h2>
+                <h4>Use the tools below to post, edit, delete, and moderate posts on the interactive whiteboard.</h4>
+                <h4><a href="{{logout}}">Logout</a></h4>
+            </div>
+            <hr>
+            <div class="col-md-6">
+                <h3>Make a Post</h3>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="title">Post Title</label>
+                        <input type="text" class="form-control" name="title" id="title" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Post Description</label>
+                        <textarea name="description" class="form-control" id=description rows="8" cols="40"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Student Name</label>
+                        <input type="text" class="form-control" name="title" id="title" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Student Tagline</label>
+                        <input type="text" class="form-control" name="title" id="title" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Post Thumbnail</label>
+                        <input type="file" name="image" id="image" value="" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

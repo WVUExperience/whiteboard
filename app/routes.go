@@ -33,6 +33,21 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     currentUser := user.Current(c)
+    if r.Method == "POST" {
+        if f, v := UploadImage(c, r); f != nil {
+            c.Infof("%#v", r.Body)
+            p := &Post{
+                Title: string(v["title"][0]),
+                Description: string(v["description"][0]),
+                Student: Student{
+                    Name: string(v["name"][0]),
+                    Tagline: string(v["tagline"][0]),
+                },
+                PostImage: f.BlobKey,
+            }
+            SubmitPost(c, p)
+        }
+    }
     if currentUser == nil {
         url, _ := user.LoginURL(c, "/staff/dashboard")
         http.Redirect(w, r, url, 301)
@@ -43,6 +58,7 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
             "email": currentUser.String(),
             "id": currentUser.ID,
             "logout": logoutURL,
+            "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
         }
         page := mustache.RenderFile(GetPath("dash.html"), data)
         fmt.Fprint(w, page)

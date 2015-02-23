@@ -35,8 +35,8 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     currentUser := user.Current(c)
     if r.Method == "POST" {
-        if f, v := UploadImage(c, r); f != nil {
-            c.Infof("%#v", r.Body)
+        f, v := UploadImage(c, r)
+        if v != nil {
             p := &Post{
                 Title: string(v["title"][0]),
                 Description: string(v["description"][0]),
@@ -44,7 +44,11 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
                     Name: string(v["name"][0]),
                     Tagline: string(v["tagline"][0]),
                 },
-                PostImage: f.BlobKey,
+            }
+            if f == nil {
+                p.PostImage = "null"
+            } else {
+                p.PostImage = f.BlobKey
             }
             SubmitPost(c, p)
         }

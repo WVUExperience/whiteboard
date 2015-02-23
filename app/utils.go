@@ -23,7 +23,7 @@ func UploadImage(c appengine.Context, r *http.Request) (*blobstore.BlobInfo, url
     }
     file := blobs["image"]
     if len(file) == 0 {
-            return nil, others
+        return nil, others
     } else {
         return file[0], others
     }

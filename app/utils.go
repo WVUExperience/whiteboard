@@ -33,3 +33,7 @@ func GetUploadURL(c appengine.Context, path string) string {
     uri, _ := blobstore.UploadURL(c, path, nil)
     return uri.String()
 }
+
+func ServeImage(w http.ResponseWriter, key string) {
+    blobstore.Send(w, appengine.BlobKey(key))
+}

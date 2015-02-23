@@ -4,6 +4,7 @@ import (
     "appengine"
     "appengine/user"
     "fmt"
+    "github.com/gorilla/mux"
     "github.com/hoisie/mustache"
     "net/http"
 )
@@ -65,4 +66,9 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     } else {
         fmt.Fprint(w, "This page is restricted to campaign staff only.")
     }
+}
+
+func ImageServeHandler(w http.ResponseWriter, r *http.Request) {
+    vars := mux.Vars(r)
+    ServeImage(w, vars["blobKey"])
 }

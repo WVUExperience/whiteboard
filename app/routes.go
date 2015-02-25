@@ -10,7 +10,12 @@ import (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprint(w, "Hello world!")
+    c := appengine.NewContext(r)
+    data := map[string]interface{}{
+        "posts": GetAllPosts(c),
+    }
+    page := mustache.RenderFile(GetPath("index.html"), data)
+    fmt.Fprint(w, page)
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {

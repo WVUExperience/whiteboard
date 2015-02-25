@@ -4,13 +4,21 @@ import (
     "appengine"
     "appengine/datastore"
     "github.com/kennygrant/sanitize"
+    "math/rand"
+    "strings"
+    "time"
 )
 
 type Post struct {
     Title, Description, Path string
-    Votes int
+    Votes Votes
     Student Student
     PostImage appengine.BlobKey `datastore:",noindex"`
+}
+
+type Votes struct {
+    Count int
+    Voters []string
 }
 
 type Student struct {
@@ -18,8 +26,48 @@ type Student struct {
 }
 
 func SubmitPost(c appengine.Context, p *Post) {
-    p.Path = sanitize.Path(p.Title)
-    p.Votes = 0
+    p.Path = GetSlug(p.Title)
+    p.Votes.Count = 0
+    key := datastore.NewKey(c, "Post", p.Path, 0, nil)
+    datastore.Put(c, key, p)
+}
+
+func GetSlug(s string) string {
+    s = sanitize.Path(s)
+    s = strings.Replace(s, ".", "", -1)
+    if strings.Count(s, "-") > 5 {
+        letters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+        b := make([]rune, 5)
+        rand.Seed(time.Now().UTC().UnixNano())
+        for i := range b {
+            b[i] = letters[rand.Intn(len(letters))]
+        }
+        temp, n := "", 4
+        for _, v := range strings.Split(s, "-") {
+            temp += v + "-"
+            if n == 0 {
+                temp += string(b)
+                break;
+            }
+            n--
+        }
+        s = temp
+    }
+    return s
+}
+
+func (p *Post) HasVoted(email string) bool {
+    for _, v := range p.Votes.Voters {
+        if email == v {
+            return true
+        }
+    }
+    return false
+}
+
+func (p *Post) SubmitVote(c appengine.Context, email string) {
+    p.Votes.Count++;
+    p.Votes.Voters = append(p.Votes.Voters, email)
     key := datastore.NewKey(c, "Post", p.Path, 0, nil)
     datastore.Put(c, key, p)
 }

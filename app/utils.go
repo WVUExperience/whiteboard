@@ -3,6 +3,7 @@ package main
 import (
     "appengine"
     "appengine/blobstore"
+    "encoding/json"
     "net/http"
     "net/url"
     "os"
@@ -13,6 +14,10 @@ func GetPath(templateName string) string {
     dir := path.Join(os.Getenv("PWD"), "templates")
     tmpl := path.Join(dir, templateName)
     return tmpl
+}
+
+func WriteJSON(w http.ResponseWriter, data map[string]interface{}) {
+    json.NewEncoder(w).Encode(data)
 }
 
 func UploadImage(c appengine.Context, r *http.Request) (*blobstore.BlobInfo, url.Values) {

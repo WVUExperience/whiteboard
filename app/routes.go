@@ -44,6 +44,33 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprint(w, page)
 }
 
+func VoteHandler(w http.ResponseWriter, r *http.Request) {
+    c := appengine.NewContext(r)
+    u := user.Current(c)
+    vars := mux.Vars(r)
+    data := map[string]interface{}{
+        "error": nil,
+        "success": false,
+    }
+    if u == nil {
+        data["error"] = "You must be logged in to perform this action."
+        data["success"] = false
+    } else if IsWVUStudent(u.Email) {
+        p := GetPost(c, vars["slug"])
+        if !p.HasVoted(u.Email) {
+            data["success"] = true
+            p.SubmitVote(c, u.Email)
+        } else {
+            data["success"] = false
+            data["error"] = "You cannot vote twice on an issue."
+        }
+    } else {
+        data["success"] = false
+        data["error"] = "You do not have permission to vote on this issue."
+    }
+    WriteJSON(w, data)
+}
+
 func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     currentUser := user.Current(c)

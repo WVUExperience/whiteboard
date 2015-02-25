@@ -36,6 +36,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func IssueHandler(w http.ResponseWriter, r *http.Request) {
+    c := appengine.NewContext(r)
+    vars := mux.Vars(r)
+    p := GetPost(c, vars["slug"])
+    page := mustache.RenderFile(GetPath("issue.html"), p)
+    fmt.Fprint(w, page)
+}
+
 func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     currentUser := user.Current(c)

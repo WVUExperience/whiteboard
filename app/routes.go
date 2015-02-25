@@ -25,8 +25,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         url, _ := user.LoginURL(c, "/login")
         http.Redirect(w, r, url, 301)
         return
-    } else if IsWVUStudent(currentUser.String()) {
-        if IsCampaignStaff(currentUser.String()) {
+    } else if IsWVUStudent(currentUser.Email) {
+        if IsCampaignStaff(currentUser.Email) {
             fmt.Fprint(w, "<a href='/staff/dashboard'>Campaign Staff Dashboard</a><br>")
         }
 
@@ -97,7 +97,7 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
         url, _ := user.LoginURL(c, "/staff/dashboard")
         http.Redirect(w, r, url, 301)
         return
-    } else if IsWVUStudent(currentUser.String()) && IsCampaignStaff(currentUser.String()) {
+    } else if IsWVUStudent(currentUser.Email) && IsCampaignStaff(currentUser.Email) {
         logoutURL, _ := user.LogoutURL(c, "/")
         data := map[string]interface{}{
             "email": currentUser.String(),

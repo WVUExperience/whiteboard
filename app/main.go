@@ -8,7 +8,7 @@ import (
 func init() {
     router := mux.NewRouter()
     router.HandleFunc("/", IndexHandler)
-    router.HandleFunc("/login", LoginHandler).Methods("GET")
+    router.HandleFunc("/login", LoginHandler).Methods("GET").Queries("returnUrl", "")
     router.HandleFunc("/i/{blobKey}", ImageServeHandler).Methods("GET")
     router.HandleFunc("/issue/{slug}", IssueHandler).Methods("GET")
     router.HandleFunc("/vote/{slug}", VoteHandler).Methods("POST")

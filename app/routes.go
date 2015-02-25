@@ -20,19 +20,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
-    currentUser := user.Current(c)
-    if currentUser == nil {
-        url, _ := user.LoginURL(c, "/login")
+    u := user.Current(c)
+    if u == nil {
+        url, _ := user.LoginURL(c, r.FormValue("returnUrl"))
         http.Redirect(w, r, url, 301)
-        return
-    } else if IsWVUStudent(currentUser.Email) {
-        if IsCampaignStaff(currentUser.Email) {
-            fmt.Fprint(w, "<a href='/staff/dashboard'>Campaign Staff Dashboard</a><br>")
-        }
-
-        fmt.Fprint(w, "Welcome, " + currentUser.String())
     } else {
-        fmt.Fprint(w, "Sorry, this page is only available for WVU students.")   
+        http.Redirect(w, r, r.FormValue("returnUrl"), 301)
     }
 }
 

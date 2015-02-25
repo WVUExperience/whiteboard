@@ -1,0 +1,57 @@
+.post {
+    padding: 10px;
+    height: 152px;
+}
+
+.post-content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.post-content img {
+    max-height: 150px;
+    max-width: 150px;
+    height: auto;
+    width: auto;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
+.votes {
+    float: left;
+    font-size: 32px;
+    width: 55px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.post-body {
+    height: 3em;
+    display: table;
+}
+
+.post-body > h3 {
+    margin: 0;
+    height: 2.2em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.issue-container {
+    display: flex;
+}
+
+.issue-title {
+    margin-top: 0;
+}
+
+.issue-image {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}

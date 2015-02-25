@@ -3,48 +3,8 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
         <title>Vote - Scott Braxton 2015</title>
-        <style type="text/css" media="all">
-            .post {
-                padding: 10px;
-                height: 152px;
-            }
-            
-            .post-content {
-                position: relative;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            
-            .post-content img {
-                max-height: 150px;
-                max-width: 150px;
-                height: auto;
-                width: auto;
-                display: block;
-                float: left;
-                margin-right: 10px;
-            }
-            
-            .votes {
-                float: left !important;
-                font-size: 32px;
-                width: 55px;
-                text-align: center;
-            }
-            
-            .post-body {
-                height: 3em;
-                display: table;
-            }
-            
-            .post-body > h3 {
-                margin: 0;
-                height: 2.2em;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-        </style>
     </head>
     <body>
         <div class="jumbotron">
@@ -58,7 +18,7 @@
             <div class="col-lg-6 col-sm-12 post">
                 <div class="post-content">
                     <div class="votes">
-                        <i class="glyphicon glyphicon-arrow-up" style="display: block;margin: 0 auto;"></i>
+                        <i class="glyphicon glyphicon-arrow-up" style="display: block;margin: 0 auto;" data-slug="{{Path}}"></i>
                         {{Votes.Count}}
                     </div>
                     <a href="/issue/{{Path}}">
@@ -79,6 +39,9 @@
                 <h2>No posts have been made yet. :(</h2>
             {{/posts}}
         </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="/js/main.js" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
 

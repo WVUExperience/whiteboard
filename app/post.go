@@ -19,6 +19,7 @@ type Post struct {
 type Votes struct {
     Count int
     Voters []string
+    HasVoted bool
 }
 
 type Student struct {

@@ -18,4 +18,6 @@ $(function(){
             }
         });
     });
+
+    $('[data-voted="true"]').css({"color":"orangered"});
 });

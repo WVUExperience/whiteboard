@@ -24,6 +24,17 @@ func SubmitPost(c appengine.Context, p *Post) {
     datastore.Put(c, key, p)
 }
 
+func GetPost(c appengine.Context, slug string) *Post {
+    var posts []*Post
+    q := datastore.NewQuery("Post").Filter("Path =", slug).Limit(1)
+    q.GetAll(c, &posts)
+    if len(posts) > 0 {
+        return posts[0]
+    } else {
+        return nil
+    }
+}
+
 func GetAllPosts(c appengine.Context) []Post {
     var posts []Post
     q := datastore.NewQuery("Post")

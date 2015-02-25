@@ -66,7 +66,19 @@ func VoteHandler(w http.ResponseWriter, r *http.Request) {
 
 func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
-    currentUser := user.Current(c)
+    u := user.Current(c)
+    logoutURL, _ := user.LogoutURL(c, "/")
+    if u == nil {
+        url, _ := user.LoginURL(c, "/staff/dashboard")
+        http.Redirect(w, r, url, 301)
+        return
+    }
+    data := map[string]interface{}{
+        "email": u.Email,
+        "id": u.ID,
+        "logout": logoutURL,
+        "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
+    }
     if r.Method == "POST" {
         f, v := UploadImage(c, r)
         if v != nil {
@@ -84,20 +96,10 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
                 p.PostImage = f.BlobKey
             }
             SubmitPost(c, p)
+            data["newPost"] = p
         }
     }
-    if currentUser == nil {
-        url, _ := user.LoginURL(c, "/staff/dashboard")
-        http.Redirect(w, r, url, 301)
-        return
-    } else if IsWVUStudent(currentUser.Email) && IsCampaignStaff(currentUser.Email) {
-        logoutURL, _ := user.LogoutURL(c, "/")
-        data := map[string]interface{}{
-            "email": currentUser.String(),
-            "id": currentUser.ID,
-            "logout": logoutURL,
-            "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
-        }
+    if IsCampaignStaff(u.Email) {
         page := mustache.RenderFile(GetPath("dash.html"), data)
         fmt.Fprint(w, page)
     } else {

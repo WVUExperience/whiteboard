@@ -13,9 +13,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     u := user.Current(c)
     posts := GetAllPosts(c)
-    for i, v := range posts {
-        if v.HasVoted(u.Email) {
-            posts[i].Votes.HasVoted = true
+    if u != nil {
+        for i, v := range posts {
+            if v.HasVoted(u.Email) {
+                posts[i].Votes.HasVoted = true
+            }
         }
     }
     data := map[string]interface{}{
@@ -41,7 +43,9 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
     u := user.Current(c)
     vars := mux.Vars(r)
     p := GetPost(c, vars["slug"])
-    p.Votes.HasVoted = p.HasVoted(u.Email)
+    if u != nil {
+        p.Votes.HasVoted = p.HasVoted(u.Email)
+    }
     page := mustache.RenderFile(GetPath("issue.html"), p)
     fmt.Fprint(w, page)
 }

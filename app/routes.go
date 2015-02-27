@@ -59,6 +59,13 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
         "user": GetEmbeddedUser(u, c),
     }
     if u != nil {
+        if r.Method == "DELETE" && IsCampaignStaff(u.Email) {
+            data = map[string]interface{}{
+                "success": p.DeletePost(c),
+            }
+            WriteJSON(w, data)
+            return
+        }
         p.Votes.HasVoted = p.HasVoted(u.Email)
     }
     page := mustache.RenderFileInLayout(GetPath("issue.html"), GetPath("layout.html"), data)
@@ -107,6 +114,7 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     data := map[string]interface{}{
         "user": GetEmbeddedUser(u, c),
         "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
+        "posts": GetAllPosts(c),
     }
     if r.Method == "POST" {
         f, v := UploadImage(c, r)

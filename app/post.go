@@ -73,6 +73,17 @@ func (p *Post) SubmitVote(c appengine.Context, email string) {
     datastore.Put(c, key, p)
 }
 
+func (p *Post) DeletePost(c appengine.Context) bool {
+    key := datastore.NewKey(c, "Post", p.Path, 0, nil)
+    err := datastore.Delete(c, key)
+    if err == nil {
+        return true
+    } else {
+        c.Errorf("Error deleting post %v: %v", p.Path, err.Error())
+        return false
+    }
+}
+
 func GetPost(c appengine.Context, slug string) *Post {
     var posts []*Post
     q := datastore.NewQuery("Post").Filter("Path =", slug).Limit(1)

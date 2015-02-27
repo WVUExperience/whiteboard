@@ -37,4 +37,21 @@ $(function(){
                 break;
         }
     });
+
+    $('.glyphicon-trash[data-slug]').click(function(){
+        var row = $(this).parents("tr");
+        if(confirm("Are you sure you want to delete the post \"" + $(this).attr("data-slug") + "\"?\nThis cannot be undone.")) {
+            $.ajax({
+                url: "/issue/" + $(this).attr("data-slug"),
+                dataType: "json",
+                type: "DELETE"
+            }).done(function(d){
+                if(d.success) {
+                    row.remove();
+                } else {
+                    alert("Something went wrong. Please try again and if the issue persists, contact the developers.");
+                }
+            });
+        }
+    });
 });

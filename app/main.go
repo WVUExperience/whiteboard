@@ -11,7 +11,7 @@ func init() {
     router.HandleFunc("/about", AboutHandler)
     router.HandleFunc("/login", LoginHandler).Methods("GET").Queries("returnUrl", "")
     router.HandleFunc("/i/{blobKey}", ImageServeHandler).Methods("GET")
-    router.HandleFunc("/issue/{slug}", IssueHandler).Methods("GET")
+    router.HandleFunc("/issue/{slug}", IssueHandler).Methods("GET", "DELETE")
     router.HandleFunc("/vote/{slug}", VoteHandler).Methods("POST")
 
     router.HandleFunc("/staff/dashboard", StaffDashboardHandler).Methods("GET", "POST")

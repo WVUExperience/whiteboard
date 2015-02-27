@@ -1,100 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <title>Vote - Scott Braxton 2015</title>
-    </head>
-    <body>
-        <div id="main">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="text-center">
-                    <a href="/">
-                        <img alt="The Experience Scott Braxton 2015" src="http://www.thewvuexperience.com/img/exp/ScottBraxton_TransparentBG.gif" style="width:300px;">
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                    <div class="container">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li><a href="index.html" >Home</a></li>
-                            <li><a href="presvp.html" >Pres/VP</a></li>
-                            <li><a href="piecesofthepuzzle.html" >The Pieces</a></li>
-                            <li><a href="ticket.html" >Our Ticket</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>Welcome, {{email}}</li>
-                            <li><a href="{{logout}}">Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="container">
-                <div>
-                    <h2>Welcome, {{email}}</h2>
-                    <h4>Use the tools below to post, edit, delete, and moderate posts on the interactive whiteboard.</h4>
-                </div>
-                <hr>
-                {{#newPost}}
-                <div class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>Success!</strong> You submitted a new post: <a href="/issue/{{Path}}">{{Title}}</a>
-                </div>
-                {{/newPost}}
-                <div class="col-md-6">
-                    <h3>Make a Post</h3>
-                    <form method="post" action="{{uploadUrl}}" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="title">Post Title</label>
-                            <input type="text" class="form-control" name="title" id="title" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Post Description</label>
-                            <textarea name="description" class="form-control" id="description" rows="8" cols="40"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Post Category</label>
-                            <select name="category" id="category">
-                                <option value="0">Academic</option>
-                                <option value="1">Well Being</option>
-                                <option value="2">Professional</option>
-                                <option value="3">Social</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Student Name</label>
-                            <input type="text" class="form-control" name="name" id="name" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label for="tagline">Student Tagline</label>
-                            <input type="text" class="form-control" name="tagline" id="tagline" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Post Thumbnail</label>
-                            <input type="file" name="image" id="image" value="" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+<div class="container">
+    <div>
+        <h2>Welcome, {{email}}</h2>
+        <h4>Use the tools below to post, edit, delete, and moderate posts on the interactive whiteboard.</h4>
+    </div>
+    <hr>
+    {{#newPost}}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Success!</strong> You submitted a new post: <a href="/issue/{{Path}}">{{Title}}</a>
+    </div>
+    {{/newPost}}
+    <div class="col-md-6">
+        <h3>Make a Post</h3>
+        <form method="post" action="{{uploadUrl}}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Post Title</label>
+                <input type="text" class="form-control" name="title" id="title" value="" />
             </div>
-            <div id="footer-push"></div>
-        </div>
-        <footer>
-            <div class="container">
-                <span>&copy; 2015 The Experience | <a href="https://github.com/WVUExperience/whiteboard">Open Source, MIT</a></span>
+            <div class="form-group">
+                <label for="description">Post Description</label>
+                <textarea name="description" class="form-control" id="description" rows="8" cols="40"></textarea>
             </div>
-        </footer>
-    </body>
-</html>
+            <div class="form-group">
+                <label for="category">Post Category</label>
+                <select name="category" id="category">
+                    <option value="0">Academic</option>
+                    <option value="1">Well Being</option>
+                    <option value="2">Professional</option>
+                    <option value="3">Social</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">Student Name</label>
+                <input type="text" class="form-control" name="name" id="name" value="" />
+            </div>
+            <div class="form-group">
+                <label for="tagline">Student Tagline</label>
+                <input type="text" class="form-control" name="tagline" id="tagline" value="" />
+            </div>
+            <div class="form-group">
+                <label for="image">Post Thumbnail</label>
+                <input type="file" name="image" id="image" value="" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

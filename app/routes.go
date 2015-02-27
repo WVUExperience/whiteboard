@@ -24,7 +24,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
         "posts": posts,
         "user": GetEmbeddedUser(u, c),
     }
-    page := mustache.RenderFile(GetPath("index.html"), data)
+    page := mustache.RenderFileInLayout(GetPath("index.html"), GetPath("layout.html"), data)
     fmt.Fprint(w, page)
 }
 
@@ -51,7 +51,7 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
     if u != nil {
         p.Votes.HasVoted = p.HasVoted(u.Email)
     }
-    page := mustache.RenderFile(GetPath("issue.html"), data)
+    page := mustache.RenderFileInLayout(GetPath("issue.html"), GetPath("layout.html"), data)
     fmt.Fprint(w, page)
 }
 
@@ -119,7 +119,7 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
     if IsCampaignStaff(u.Email) {
-        page := mustache.RenderFile(GetPath("dash.html"), data)
+        page := mustache.RenderFileInLayout(GetPath("dash.html"), GetPath("layout.html"), data)
         fmt.Fprint(w, page)
     } else {
         fmt.Fprint(w, "This page is restricted to campaign staff only.")

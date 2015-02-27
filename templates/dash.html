@@ -47,4 +47,33 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+    <div class="col-md-12">
+        <h3>Delete a Post</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID / Slug</th>
+                    <th>Post Title</th>
+                    <th>Votes</th>
+                    <th>Voters</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            {{#posts}}
+            <tr>
+                <td>
+                    <i class="glyphicon glyphicon-trash" style="color:firebrick;cursor:pointer" title="Delete" data-slug="{{Path}}"></i>
+                </td>
+                <td>
+                    <a href="/issue/{{Path}}">{{Path}}</a>
+                </td>
+                <td>{{Title}}</td>
+                <td>{{Votes.Count}}</td>
+                <td>{{#Votes.Voters}}{{.}}<br>{{/Votes.Voters}}</td>
+                <td><span class="label label-category">{{Category}}</span></td>
+            </tr>
+            {{/posts}}
+        </table>
+    </div>
 </div>

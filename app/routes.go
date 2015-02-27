@@ -59,6 +59,13 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
         "user": GetEmbeddedUser(u, c),
     }
     if u != nil {
+        if r.Method == "DELETE" && IsCampaignStaff(u.Email) {
+            data = map[string]interface{}{
+                "success": p.DeletePost(c),
+            }
+            WriteJSON(w, data)
+            return
+        }
         p.Votes.HasVoted = p.HasVoted(u.Email)
     }
     page := mustache.RenderFileInLayout(GetPath("issue.html"), GetPath("layout.html"), data)
@@ -99,10 +106,15 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
         url, _ := user.LoginURL(c, "/staff/dashboard")
         http.Redirect(w, r, url, 301)
         return
+    } else if !IsCampaignStaff(u.Email) {
+        fmt.Fprint(w, "This page is restricted to campaign staff only.")
+        return
     }
+
     data := map[string]interface{}{
         "user": GetEmbeddedUser(u, c),
         "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
+        "posts": GetAllPosts(c),
     }
     if r.Method == "POST" {
         f, v := UploadImage(c, r)
@@ -128,8 +140,6 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     if IsCampaignStaff(u.Email) {
         page := mustache.RenderFileInLayout(GetPath("dash.html"), GetPath("layout.html"), data)
         fmt.Fprint(w, page)
-    } else {
-        fmt.Fprint(w, "This page is restricted to campaign staff only.")
     }
 }
 

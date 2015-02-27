@@ -42,7 +42,8 @@ func IsCampaignStaff(email string) bool {
     "aionderik@mix.wvu.edu", "jleach6@mix.wvu.edu", "jamcguire@mix.wvu.edu",
     "mwrogers@mix.wvu.edu", "sjcrandall@mix.wvu.edu", "aherric1@mix.wvu.edu",
     "jlriseberg@mix.wvu.edu", "nrmcdill@mix.wvu.edu", "clammer1@mix.wvu.edu",
-    "rlburky@mix.wvu.edu", "aleccneu@gmail.com", "scottbraxton2015@gmail.com"}
+    "rlburky@mix.wvu.edu", "aleccneu@gmail.com", "scottbraxton2015@gmail.com",
+    "scscott@mix.wvu.edu"}
     for _, v := range staffEmails {
         if email == v {
             return true

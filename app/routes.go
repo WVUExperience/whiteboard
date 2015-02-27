@@ -28,6 +28,16 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprint(w, page)
 }
 
+func AboutHandler(w http.ResponseWriter, r *http.Request) {
+    c := appengine.NewContext(r)
+    u := user.Current(c)
+    data := map[string]interface{}{
+        "user": GetEmbeddedUser(u, c),
+    }
+    page := mustache.RenderFileInLayout(GetPath("about.html"), GetPath("layout.html"), data)
+    fmt.Fprint(w, page)
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
     c := appengine.NewContext(r)
     u := user.Current(c)

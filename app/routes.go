@@ -99,7 +99,11 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
         url, _ := user.LoginURL(c, "/staff/dashboard")
         http.Redirect(w, r, url, 301)
         return
+    } else if !IsCampaignStaff(u.Email) {
+        fmt.Fprint(w, "This page is restricted to campaign staff only.")
+        return
     }
+
     data := map[string]interface{}{
         "user": GetEmbeddedUser(u, c),
         "uploadUrl": GetUploadURL(c, "/staff/dashboard"),
@@ -128,8 +132,6 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
     if IsCampaignStaff(u.Email) {
         page := mustache.RenderFileInLayout(GetPath("dash.html"), GetPath("layout.html"), data)
         fmt.Fprint(w, page)
-    } else {
-        fmt.Fprint(w, "This page is restricted to campaign staff only.")
     }
 }
 

@@ -27,15 +27,24 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                     <div class="container">
                         <ul class="nav navbar-nav navbar-left">
-                            <li><a href="index.html" >Home</a></li>
-                            <li><a href="presvp.html" >Pres/VP</a></li>
-                            <li><a href="piecesofthepuzzle.html" >The Pieces</a></li>
-                            <li><a href="ticket.html" >Our Ticket</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="http://thewvuexperience.com">Campaign Home</a></li>
+                            <li><a href="/about">About</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="yourexp.html" >Your WVU</a></li>
-                            <li><a href="coupon.html" >Coupons</a></li>
-                            <li><a href="faq.html" >FAQ</a></li>
+                            {{#user}}
+                            <li><a href="#">{{Name}}</a></li>
+                            <li><a href="{{Logout}}">Logout</a></li>
+                            {{/user}}
+                            {{^user}}
+                            <li>
+                                <script type="text/javascript" id="loginScript">
+                                    //a dirty way to embed a login link with valid returnUrl
+                                    document.write("<a href='/login?returnUrl=" + encodeURIComponent(document.URL) + "'>Login</a>");
+                                    document.getElementById("loginScript").remove();
+                                </script>
+                            </li>
+                            {{/user}}
                         </ul>
                     </div>
                 </div>
@@ -43,26 +52,26 @@
             <div class="container">
                 <div class="issue-container">
                     <div class="col-md-6 col-xs-12">
-                        <img class="issue-image" src="/i/{{PostImage}}">
+                        <img class="issue-image" src="/i/{{post.PostImage}}">
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="votes col-xs-2 col-sm-2">
-                            <i class="glyphicon glyphicon-arrow-up" style="display: block;margin: 0 auto;" data-slug="{{Path}}" data-voted="{{Votes.HasVoted}}"></i>
+                            <i class="glyphicon glyphicon-arrow-up" style="display: block;margin: 0 auto;" data-slug="{{post.Path}}" data-voted="{{post.Votes.HasVoted}}"></i>
                             <span class="count">
-                                {{Votes.Count}}
+                                {{post.Votes.Count}}
                             </span>
                         </div>
-                        <h2 class="issue-title visible-md visible-lg">{{Title}}</h2>
-                        <h2 class="issue-title visible-xs visible-sm clearfix">{{Title}}</h2>
-                        <h4>Submitted by {{Student.Name}}, {{Student.Tagline}}</h4>
+                        <h2 class="issue-title visible-md visible-lg">{{post.Title}}</h2>
+                        <h2 class="issue-title visible-xs visible-sm clearfix">{{post.Title}}</h2>
+                        <h4>Submitted by {{post.Student.Name}}, {{post.Student.Tagline}}</h4>
                         <hr>
                         <p>
                             <b>Issue Category: </b>
-                            <span class="label label-category">{{Category}}</span>
+                            <span class="label label-category">{{post.Category}}</span>
                             <br>
                             <b>About this issue: </b>
                             <br>
-                            {{Description}}
+                            {{post.Description}}
                         </p>
                     </div>
                 </div>

@@ -1,8 +1,28 @@
 package main
 
 import (
+    "appengine"
+    "appengine/user"
     "strings"    
 )
+
+type EmbeddedUser struct {
+    Name, Email, ID, Logout string
+}
+
+func GetEmbeddedUser(u *user.User, c appengine.Context) *EmbeddedUser {
+    if u == nil {
+        return nil
+    } else {
+        logout, _ := user.LogoutURL(c, "/")
+        return &EmbeddedUser{
+            Name: u.String(),
+            Email: u.Email,
+            ID: u.ID,
+            Logout: logout,
+        }
+    }
+}
 
 func IsWVUStudent(email string) bool {
     return strings.Split(email, "@")[1] == "mix.wvu.edu"

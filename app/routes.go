@@ -22,6 +22,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
     }
     data := map[string]interface{}{
         "posts": posts,
+        "user": GetEmbeddedUser(u, c),
     }
     page := mustache.RenderFile(GetPath("index.html"), data)
     fmt.Fprint(w, page)
@@ -43,10 +44,14 @@ func IssueHandler(w http.ResponseWriter, r *http.Request) {
     u := user.Current(c)
     vars := mux.Vars(r)
     p := GetPost(c, vars["slug"])
+    data := map[string]interface{}{
+        "post": p,
+        "user": GetEmbeddedUser(u, c),
+    }
     if u != nil {
         p.Votes.HasVoted = p.HasVoted(u.Email)
     }
-    page := mustache.RenderFile(GetPath("issue.html"), p)
+    page := mustache.RenderFile(GetPath("issue.html"), data)
     fmt.Fprint(w, page)
 }
 

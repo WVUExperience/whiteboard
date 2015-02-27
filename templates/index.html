@@ -27,15 +27,24 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                     <div class="container">
                         <ul class="nav navbar-nav navbar-left">
-                            <li><a href="index.html" >Home</a></li>
-                            <li><a href="presvp.html" >Pres/VP</a></li>
-                            <li><a href="piecesofthepuzzle.html" >The Pieces</a></li>
-                            <li><a href="ticket.html" >Our Ticket</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="http://thewvuexperience.com">Campaign Home</a></li>
+                            <li><a href="/about">About</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="yourexp.html" >Your WVU</a></li>
-                            <li><a href="coupon.html" >Coupons</a></li>
-                            <li><a href="faq.html" >FAQ</a></li>
+                            {{#user}}
+                            <li><a href="#">{{Name}}</a></li>
+                            <li><a href="{{Logout}}">Logout</a></li>
+                            {{/user}}
+                            {{^user}}
+                            <li>
+                                <script type="text/javascript" id="loginScript">
+                                    //a dirty way to embed a login link with valid returnUrl
+                                    document.write("<a href='/login?returnUrl=" + encodeURIComponent(document.URL) + "'>Login</a>");
+                                    document.getElementById("loginScript").remove();
+                                </script>
+                            </li>
+                            {{/user}}
                         </ul>
                     </div>
                 </div>

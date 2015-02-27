@@ -8,6 +8,7 @@ import (
 
 type EmbeddedUser struct {
     Name, Email, ID, Logout string
+    Staff *bool
 }
 
 func GetEmbeddedUser(u *user.User, c appengine.Context) *EmbeddedUser {
@@ -15,12 +16,17 @@ func GetEmbeddedUser(u *user.User, c appengine.Context) *EmbeddedUser {
         return nil
     } else {
         logout, _ := user.LogoutURL(c, "/")
-        return &EmbeddedUser{
+        currentUser := &EmbeddedUser{
             Name: u.String(),
             Email: u.Email,
             ID: u.ID,
             Logout: logout,
         }
+        if IsCampaignStaff(u.Email) {
+            t := true
+            currentUser.Staff = &t
+        }
+        return currentUser
     }
 }
 

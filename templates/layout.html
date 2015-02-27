@@ -33,6 +33,9 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             {{#user}}
+                                {{#Staff}}
+                                <li><a href="/staff/dashboard">Staff Dashboard</a></li>
+                                {{/Staff}}
                             <li><a href="#">{{Name}}</a></li>
                             <li><a href="{{Logout}}">Logout</a></li>
                             {{/user}}

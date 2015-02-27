@@ -10,7 +10,7 @@ import (
 )
 
 type Post struct {
-    Title, Description, Path string
+    Title, Description, Path, Category string
     Votes Votes
     Student Student
     PostImage appengine.BlobKey `datastore:",noindex"`

@@ -20,4 +20,21 @@ $(function(){
     });
 
     $('[data-voted="true"]').css({"color":"orangered"});
+
+    $('.label-category').each(function(){
+        switch ($(this).text()) {
+            case 'Academic':
+                $(this).css({"background-color":"#6BCB97"});
+                break;
+            case 'Well Being':
+                $(this).css({"background-color":"#E1E71B"});
+                break;
+            case 'Professional':
+                $(this).css({"background-color":"#7BADAE"});
+                break;
+            case 'Social':
+                $(this).css({"background-color":"#428389"});
+                break;
+        }
+    });
 });

@@ -102,6 +102,7 @@ func StaffDashboardHandler(w http.ResponseWriter, r *http.Request) {
                     Name: string(v["name"][0]),
                     Tagline: string(v["tagline"][0]),
                 },
+                Category: GetCategory(string(v["category"][0])),
             }
             if f == nil {
                 p.PostImage = "null"

@@ -8,6 +8,7 @@ import (
     "net/url"
     "os"
     "path"
+    "strconv"
 )
 
 func GetPath(templateName string) string {
@@ -41,4 +42,10 @@ func GetUploadURL(c appengine.Context, path string) string {
 
 func ServeImage(w http.ResponseWriter, key string) {
     blobstore.Send(w, appengine.BlobKey(key))
+}
+
+func GetCategory(index string) string {
+    categories := []string{"Academic", "Well Being", "Professional", "Social"}
+    i, _ := strconv.Atoi(index)
+    return categories[i]
 }
